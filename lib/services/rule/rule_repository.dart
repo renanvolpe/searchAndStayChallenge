@@ -37,7 +37,7 @@ class RuleService implements RuleRepository {
   @override
   Future<Result<List<HomeRule>, String>> getListRule() async {
     Map<String, String> header = {
-      "Authorization": "Bearer ${EndPoints.BeararToken}",
+      "Authorization": "Bearer ${EndPoints.beararToken}",
       "Accept-Language": "pt"
     };
 
@@ -49,15 +49,15 @@ class RuleService implements RuleRepository {
 
       if (response.statusCode == 200) {
         List<HomeRule> listHomeRules = [];
-        var homeRules = responseMapDecoded;
+        var homeRules = responseMapDecoded["data"]["entities"];
         for (var element in homeRules) {
           listHomeRules.add(HomeRule.fromMap(element));
         }
         //succes way here :)
-        Success(listHomeRules);
+        return Success(listHomeRules);
       } else if (response.statusCode == 409) {
         //Barear Token error, review that
-        return const Failure("Ocorreu um erro de falta de autenticação");
+        return const Failure("Ocorreu um erro de falha de autenticação");
       }
     } on HttpException {
       return const Failure("Erro de requisição da API ocorrida");
@@ -65,10 +65,8 @@ class RuleService implements RuleRepository {
       return const Failure("Foi excedido o tempo  de requisição da API");
     } catch (e) {
       print("Error get by try cat: $e");
-      return const Failure("Erro inesperado ocorrido, contate o administrador");
     }
-
-    throw UnimplementedError();
+    return const Failure("Erro inesperado ocorrido, contate o administrador");
   }
 
   @override
