@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:search_and_stay/core/colors_app.dart';
 import 'package:search_and_stay/core/resumed_sized_box.dart';
+import 'package:search_and_stay/models/rule.dart';
 
 class RuleComponent extends StatelessWidget {
-  const RuleComponent({
+  RuleComponent({
+    required this.homeRule,
     super.key,
   });
-
+  HomeRule homeRule;
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -16,8 +18,8 @@ class RuleComponent extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 15, vertical: 15),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
                     color: ColorsApp.mainColor,
@@ -29,29 +31,28 @@ class RuleComponent extends StatelessWidget {
                   style: TextStyle(color: Colors.white, fontSize: 20),
                 )),
             Container(
-              margin: const EdgeInsets.symmetric(
-                  horizontal: 15, vertical: 15),
+              margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    "Rule information:",
-                    style:
-                        TextStyle(color: ColorsApp.dark, fontSize: 16),
+                    "Rule information: ${homeRule.name}",
+                    style: TextStyle(
+                        color: ColorsApp.dark,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold),
                   ),
                   10.sizeH,
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Text(
-                        "Active -" " 10",
-                        style: TextStyle(
-                            color: ColorsApp.dark, fontSize: 14),
+                        "Active - ${homeRule.active}",
+                        style: TextStyle(color: ColorsApp.dark, fontSize: 14),
                       ),
                       Text(
-                        "Order -" " 10",
-                        style: TextStyle(
-                            color: ColorsApp.dark, fontSize: 14),
+                        "Order - ${homeRule.order}",
+                        style: TextStyle(color: ColorsApp.dark, fontSize: 14),
                       ),
                     ],
                   )
