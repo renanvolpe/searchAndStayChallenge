@@ -9,7 +9,7 @@ import 'package:http/http.dart' as http;
 
 abstract class RuleRepository {
   getARule(int idRule);
-  getListRule();
+  getListRule(int page);
   editRule(HomeRule editedRule);
   deleteRule(int idRule);
   insertRule(HomeRule newRule);
@@ -116,8 +116,9 @@ class RuleService implements RuleRepository {
   }
 
   @override
-  Future<Result<List<HomeRule>, String>> getListRule() async {
-    Uri uri = Uri.https(EndPoints.baseUrl, EndPoints.homeRule);
+  Future<Result<List<HomeRule>, String>> getListRule(int page) async {
+    Map<String, dynamic>? queryParameters = {"page": page.toString()};
+    Uri uri = Uri.https(EndPoints.baseUrl, EndPoints.homeRule, queryParameters);
     try {
       http.Response response = await http.get(uri, headers: header);
 

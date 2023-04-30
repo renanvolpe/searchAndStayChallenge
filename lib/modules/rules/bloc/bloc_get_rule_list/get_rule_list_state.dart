@@ -9,6 +9,7 @@ class GetRuleListProgress extends GetRuleListState {}
 
 class GetRuleListSuccess extends GetRuleListState {
   List<HomeRule> listRules;
+  
   GetRuleListSuccess(this.listRules);
 }
 
