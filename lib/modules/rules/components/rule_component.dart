@@ -4,6 +4,7 @@ import 'package:search_and_stay/core/colors_app.dart';
 import 'package:search_and_stay/core/resumed_sized_box.dart';
 import 'package:search_and_stay/models/rule.dart';
 import 'package:search_and_stay/modules/rules/bloc/bloc_delete_rule/delete_rule_bloc.dart';
+import 'package:search_and_stay/modules/rules/components/edit_rule_dialog.dart';
 import 'package:search_and_stay/modules/rules/pages/show_rule_information_page.dart';
 
 class RuleComponent extends StatelessWidget {
@@ -78,15 +79,12 @@ class RuleComponent extends StatelessWidget {
                       ),
                       10.sizeW,
                       InkWell(
-                        child: Icon(
-                          Icons.edit,
-                          color: ColorsApp.dark,
-                          size: 17,
-                        ),
-                        onTap: () {
-                          //TODO edit a rule here
-                        },
-                      ),
+                          child: Icon(
+                            Icons.edit,
+                            color: ColorsApp.dark,
+                            size: 17,
+                          ),
+                          onTap: () => editRuleDialog(context, homeRule)),
                     ],
                   ),
                   10.sizeH,
