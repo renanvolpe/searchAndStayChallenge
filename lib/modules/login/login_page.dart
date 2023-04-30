@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:search_and_stay/core/colors_app.dart';
 import 'package:search_and_stay/core/resumed_sized_box.dart';
-import 'package:search_and_stay/modules/rules/home_rules.dart';
+import 'package:search_and_stay/modules/rules/pages/home_rules_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -77,7 +77,8 @@ class _LoginPageState extends State<LoginPage> {
                     onTap: () => Navigator.push(
                       context,
                       MaterialPageRoute<void>(
-                        builder: (BuildContext context) => const HomeRules(),
+                        builder: (BuildContext context) =>
+                            const HomeRulesPage(),
                       ),
                     ),
                     child: Container(
