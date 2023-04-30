@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:search_and_stay/modules/login/login_page.dart';
-import 'package:search_and_stay/modules/rules/bloc_add_rule.dart/add_rule_bloc.dart';
-import 'package:search_and_stay/modules/rules/bloc_get_rule_list/get_rule_list_bloc.dart';
+import 'package:search_and_stay/modules/rules/bloc/bloc_add_rule.dart/add_rule_bloc.dart';
+import 'package:search_and_stay/modules/rules/bloc/bloc_delete_rule/delete_rule_bloc.dart';
+import 'package:search_and_stay/modules/rules/bloc/bloc_get_rule_list/get_rule_list_bloc.dart';
 
 void main() {
   runApp(MultiBlocProvider(
@@ -12,6 +13,9 @@ void main() {
       ),
       BlocProvider(
         create: (context) => AddRuleBloc(),
+      ),
+      BlocProvider(
+        create: (context) => DeleteRuleBloc(),
       ),
     ],
     child: const MyApp(),

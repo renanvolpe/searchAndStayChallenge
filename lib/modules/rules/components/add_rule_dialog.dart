@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:search_and_stay/models/rule.dart';
-import 'package:search_and_stay/modules/rules/bloc_add_rule.dart/add_rule_bloc.dart';
+import 'package:search_and_stay/modules/rules/bloc/bloc_add_rule.dart/add_rule_bloc.dart';
 
 Future<void> addRuleDialog(BuildContext context) {
   final formKey = GlobalKey<FormState>();

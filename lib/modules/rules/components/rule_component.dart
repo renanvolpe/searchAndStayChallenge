@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:search_and_stay/core/colors_app.dart';
 import 'package:search_and_stay/core/resumed_sized_box.dart';
 import 'package:search_and_stay/models/rule.dart';
+import 'package:search_and_stay/modules/rules/bloc/bloc_delete_rule/delete_rule_bloc.dart';
 
 class RuleComponent extends StatelessWidget {
   RuleComponent({
@@ -66,7 +68,8 @@ class RuleComponent extends StatelessWidget {
                           size: 17,
                         ),
                         onTap: () {
-                          //TODO delete a rule here
+                          BlocProvider.of<DeleteRuleBloc>(context)
+                              .add(DeleteRuleStart(homeRule.id));
                         },
                       ),
                       10.sizeW,
