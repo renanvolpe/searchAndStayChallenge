@@ -4,13 +4,17 @@ import 'package:search_and_stay/core/colors_app.dart';
 import 'package:search_and_stay/core/resumed_sized_box.dart';
 import 'package:search_and_stay/models/rule.dart';
 import 'package:search_and_stay/modules/rules/bloc/bloc_delete_rule/delete_rule_bloc.dart';
+import 'package:search_and_stay/modules/rules/pages/show_rule_information_page.dart';
 
 class RuleComponent extends StatelessWidget {
   RuleComponent({
     required this.homeRule,
+    required this.disableMoreInformation,
     super.key,
   });
   HomeRule homeRule;
+  //this varialbe is to disable "more information" button
+  bool disableMoreInformation;
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -86,23 +90,31 @@ class RuleComponent extends StatelessWidget {
                     ],
                   ),
                   10.sizeH,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          //TODO get a rule here
-                        },
-                        child: const Text(
-                          "More information here",
-                          style: TextStyle(
-                            color: Colors.blue,
-                            fontSize: 16,
-                          ),
-                        ),
-                      )
-                    ],
-                  )
+                  disableMoreInformation
+                      ? Container()
+                      : Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            InkWell(
+                              onTap: () => Navigator.push(
+                                context,
+                                MaterialPageRoute<void>(
+                                  builder: (BuildContext context) =>
+                                      ShowRuleInformationPage(
+                                    idRule: homeRule.id,
+                                  ),
+                                ),
+                              ),
+                              child: const Text(
+                                "More information here",
+                                style: TextStyle(
+                                  color: Colors.blue,
+                                  fontSize: 16,
+                                ),
+                              ),
+                            )
+                          ],
+                        )
                 ],
               ),
             ),
