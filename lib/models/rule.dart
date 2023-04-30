@@ -4,8 +4,8 @@ import 'dart:convert';
 class HomeRule {
   int id;
   String name;
-  int active;
-  int order;
+  int? active;
+  int? order;
   HomeRule({
     required this.id,
     required this.name,
@@ -40,8 +40,8 @@ class HomeRule {
     return HomeRule(
       id: map['id'] as int,
       name: map['name'] as String,
-      active: map['active'] as int,
-      order: map['order'] as int,
+      active: map['active'] != null ? map['active'] as int : null,
+      order: map['order'] != null ? map['order'] as int : null,
     );
   }
 
