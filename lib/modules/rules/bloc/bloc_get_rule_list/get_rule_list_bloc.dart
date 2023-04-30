@@ -13,7 +13,7 @@ class GetRuleListBloc extends Bloc<GetRuleListEvent, GetRuleListState> {
       emit(GetRuleListProgress());
       ruleService = RuleService();
 
-      var response = await ruleService.getListRule();
+      var response = await ruleService.getListRule(event.page);
 
       response.fold((success) => emit(GetRuleListSuccess(success)),
           (failure) => emit(GetRuleListFailure(failure)));
