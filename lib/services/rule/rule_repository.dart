@@ -12,10 +12,14 @@ abstract class RuleRepository {
   getListRule();
   editRule();
   deleteRule();
-  insertRule();
+  insertRule(HomeRule newRule);
 }
 
 class RuleService implements RuleRepository {
+  Map<String, String> header = {
+    "Authorization": "Bearer ${EndPoints.beararToken}",
+    "Accept-Language": "pt"
+  };
   @override
   deleteRule() {
     // TODO: implement deleteRule
@@ -36,11 +40,6 @@ class RuleService implements RuleRepository {
 
   @override
   Future<Result<List<HomeRule>, String>> getListRule() async {
-    Map<String, String> header = {
-      "Authorization": "Bearer ${EndPoints.beararToken}",
-      "Accept-Language": "pt"
-    };
-
     Uri uri = Uri.https(EndPoints.baseUrl, EndPoints.homeRule);
     try {
       http.Response response = await http.get(uri, headers: header);
@@ -70,9 +69,37 @@ class RuleService implements RuleRepository {
   }
 
   @override
-  insertRule() {
-    // TODO: implement insertRule
-    throw UnimplementedError();
+  Future<Result<String, String>> insertRule(HomeRule newRule) async {
+    Uri uri = Uri.https(EndPoints.baseUrl, EndPoints.homeRule);
+
+    var bodyAddd = {
+      "house_rules": {
+        "name": newRule.name,
+        "active": newRule.active,
+        "order": newRule.order
+      }
+    };
+    try {
+      http.Response response =
+          await http.post(uri, headers: header, body: jsonEncode(bodyAddd));
+
+      var responseMapDecoded = jsonDecode(response.body);
+
+      if (response.statusCode == 200) {
+        //succes way here :)
+        return Success(responseMapDecoded["message"]);
+      } else if (response.statusCode == 409) {
+        //Barear Token error, review that
+        return const Failure("Ocorreu um erro de falha de autenticação");
+      }
+    } on HttpException {
+      return const Failure("Erro de requisição da API ocorrida");
+    } on TimeoutException {
+      return const Failure("Foi excedido o tempo  de requisição da API");
+    } catch (e) {
+      print("Error get by try cat: $e");
+    }
+    return const Failure("Erro inesperado ocorrido, contate o administrador");
   }
 }
 

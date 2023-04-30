@@ -1,8 +1,11 @@
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:search_and_stay/core/colors_app.dart';
 import 'package:search_and_stay/core/resumed_sized_box.dart';
-import 'package:search_and_stay/modules/rules/bloc/get_rule_list_bloc.dart';
+import 'package:search_and_stay/modules/rules/bloc_add_rule.dart/add_rule_bloc.dart';
+import 'package:search_and_stay/modules/rules/bloc_get_rule_list/get_rule_list_bloc.dart';
+import 'package:search_and_stay/modules/rules/components/add_rule_dialog.dart';
 import 'package:search_and_stay/modules/rules/components/rule_component.dart';
 
 class HomeRules extends StatefulWidget {
@@ -45,40 +48,68 @@ class _HomeRulesState extends State<HomeRules> {
         ),
         actions: [const FlutterLogo(), 15.sizeW],
       ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: ColorsApp.mainColor,
+        onPressed: () async =>
+            addRuleDialog(context), // call the dialog to add a rule here
+        child: const Icon(Icons.add),
+      ),
       body: SingleChildScrollView(
         child: Container(
           margin: const EdgeInsets.symmetric(horizontal: 15),
-          child: BlocBuilder<GetRuleListBloc, GetRuleListState>(
-            //TODO MAKE PAGINATION HERE
-            builder: (context, ruleListState) {
-              if (ruleListState is GetRuleListFailure) {
-                return const Center(
-                  child: Text("Ocorreu um erro na requisição"),
-                );
+          child: BlocListener<AddRuleBloc, AddRuleState>(
+            listener: (context, stateAddRule) {
+              if (stateAddRule is AddRuleFailure) {
+                Flushbar(
+                  title: "Error",
+                  message: stateAddRule.errorMessage,
+                  duration: const Duration(seconds: 3),
+                  backgroundColor: Colors.red,
+                ).show(context);
               }
-              if (ruleListState is GetRuleListProgress) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
+              if (stateAddRule is AddRuleSucces) {
+                BlocProvider.of<GetRuleListBloc>(context)
+                    .add(GetRuleListStart());
+                Flushbar(
+                  title: "Succes :)",
+                  message: stateAddRule.successMessage,
+                  duration: const Duration(seconds: 3),
+                  backgroundColor: Colors.green,
+                ).show(context);
               }
-              if (ruleListState is GetRuleListSuccess) {
-                return Column(
-                  children: [
-                    Text(
-                      "Rules above",
-                      style: TextStyle(color: ColorsApp.dark, fontSize: 16),
-                    ),
-                    15.sizeH,
-                    for (int i = 0; i < ruleListState.listRules.length; i++)
-                      Container(
-                          margin: const EdgeInsets.symmetric(vertical: 10),
-                          child: RuleComponent(
-                              homeRule: ruleListState.listRules[i]))
-                  ],
-                );
-              }
-              return Container();
             },
+            child: BlocBuilder<GetRuleListBloc, GetRuleListState>(
+              //TODO MAKE PAGINATION HERE
+              builder: (context, ruleListState) {
+                if (ruleListState is GetRuleListFailure) {
+                  return const Center(
+                    child: Text("Ocorreu um erro na requisição"),
+                  );
+                }
+                if (ruleListState is GetRuleListProgress) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                if (ruleListState is GetRuleListSuccess) {
+                  return Column(
+                    children: [
+                      Text(
+                        "Rules above",
+                        style: TextStyle(color: ColorsApp.dark, fontSize: 16),
+                      ),
+                      15.sizeH,
+                      for (int i = 0; i < ruleListState.listRules.length; i++)
+                        Container(
+                            margin: const EdgeInsets.symmetric(vertical: 10),
+                            child: RuleComponent(
+                                homeRule: ruleListState.listRules[i]))
+                    ],
+                  );
+                }
+                return Container();
+              },
+            ),
           ),
         ),
       ),

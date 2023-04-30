@@ -19,7 +19,7 @@ class RuleComponent extends StatelessWidget {
           children: [
             Container(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
                     color: ColorsApp.mainColor,
@@ -42,7 +42,7 @@ class RuleComponent extends StatelessWidget {
                         fontSize: 16,
                         fontWeight: FontWeight.bold),
                   ),
-                  10.sizeH,
+                  25.sizeH,
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -54,6 +54,50 @@ class RuleComponent extends StatelessWidget {
                         "Order - ${homeRule.order}",
                         style: TextStyle(color: ColorsApp.dark, fontSize: 14),
                       ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      InkWell(
+                        child: Icon(
+                          Icons.delete,
+                          color: ColorsApp.dark,
+                          size: 17,
+                        ),
+                        onTap: () {
+                          //TODO delete a rule here
+                        },
+                      ),
+                      10.sizeW,
+                      InkWell(
+                        child: Icon(
+                          Icons.edit,
+                          color: ColorsApp.dark,
+                          size: 17,
+                        ),
+                        onTap: () {
+                          //TODO edit a rule here
+                        },
+                      ),
+                    ],
+                  ),
+                  10.sizeH,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          //TODO get a rule here
+                        },
+                        child: const Text(
+                          "More information here",
+                          style: TextStyle(
+                            color: Colors.blue,
+                            fontSize: 16,
+                          ),
+                        ),
+                      )
                     ],
                   )
                 ],

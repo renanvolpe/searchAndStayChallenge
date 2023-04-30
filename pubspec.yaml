@@ -16,6 +16,7 @@ dependencies:
   result_dart: ^1.0.5
   http: ^0.13.5
   flutter_bloc: ^8.1.2
+  another_flushbar: ^1.12.29
 
 dev_dependencies:
   flutter_test:
