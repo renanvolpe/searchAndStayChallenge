@@ -8,7 +8,7 @@ import 'package:search_and_stay/models/rule.dart';
 import 'package:http/http.dart' as http;
 
 abstract class RuleRepository {
-  getARule();
+  getARule(int idRule);
   getListRule();
   editRule();
   deleteRule(int idRule);
@@ -57,9 +57,33 @@ class RuleService implements RuleRepository {
   }
 
   @override
-  getARule() {
-    // TODO: implement getARule
-    throw UnimplementedError();
+  Future<Result<HomeRule, String>> getARule(int idRule) async {
+    var params = "/$idRule";
+    Uri uri = Uri.https(EndPoints.baseUrl, EndPoints.homeRule + params);
+    try {
+      http.Response response = await http.get(uri, headers: header);
+
+      var responseMapDecoded = jsonDecode(response.body);
+
+      if (response.statusCode == 200) {
+        var homeRules = responseMapDecoded["data"];
+
+        HomeRule rule = HomeRule.fromMap(homeRules);
+        
+        //succes way here :)
+        return Success(rule);
+      } else if (response.statusCode == 409) {
+        //Barear Token error, review that
+        return const Failure("Ocorreu um erro de falha de autenticação");
+      }
+    } on HttpException {
+      return const Failure("Erro de requisição da API ocorrida");
+    } on TimeoutException {
+      return const Failure("Foi excedido o tempo  de requisição da API");
+    } catch (e) {
+      print("Error get by try cat: $e");
+    }
+    return const Failure("Erro inesperado ocorrido, contate o administrador");
   }
 
   @override
