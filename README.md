@@ -1,16 +1,29 @@
-# search_and_stay
 
-A new Flutter project.
+# Search and Stay App
 
-## Getting Started
+- Technologies used: Dart and Flutter
 
-This project is a starting point for a Flutter application.
+- This project was made for test knowledge for make Flutter app.
 
-A few resources to get you started if this is your first Flutter project:
+- This project consisted of making CRUD of a RULES list with pagination in some cases.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Rest API
+
+- An public API was seached by use in this task 
+- base URL: sys-dev.searchandstay.com 
+
+
+# 🛠 Features and Techs
+Develop in Fluter and Dart
+## Features developed
+- CRUD Rules( like TODO)
+- Pagination with get list Rules
+
+## Techs and Libs
+- MVC
+- BLoC
+
+
+## Contact:
+- [linkedin - Renan Volpe](https://www.linkedin.com/in/renanvolpe/)
